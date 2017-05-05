@@ -1,4 +1,4 @@
-data_figure2A %>%
+data_tab4_10states %>%
   hchart(
     "line",
     hcaes(
@@ -41,7 +41,7 @@ data_figure2A %>%
         )
     ) %>%
   hc_add_series(
-    data = data_figure2A,
+    data = data_tab4_10states,
     type = "bubble",
     hcaes(
       x = standardized_report_per_round,
@@ -50,7 +50,7 @@ data_figure2A %>%
       color = colour
     ),
     showInLegend = FALSE,
-    enableMouseTracking = TRUE,
+    enableMouseTracking = FALSE,
     states = list(hover = list(enabled = TRUE)),
     tooltip = list(
       enabled = FALSE

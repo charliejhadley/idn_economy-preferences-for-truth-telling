@@ -308,6 +308,7 @@ output$bubble_model_UI <- renderUI({
   }
   
   fluidPage(p(strong("Citation: "), study[["citation"]]),
+            # p(strong("Title: "), study[["paper_title"]])
             p(strong("Country: "), study[["country"]]),
             p(strong("Number of subjects: "), study[["subjects"]]),
             weblink)
