@@ -1,6 +1,18 @@
+fs_deposit_id <- 4981589
+deposit_details <- fs_details(fs_deposit_id)
+
+deposit_details <- unlist(deposit_details$files)
+deposit_details <- data.frame(split(deposit_details, names(deposit_details)),stringsAsFactors = F) %>% as_tibble()
+
+
 ##### ======= tab1
 ##### ============== 
-data_tab1_6states <- read_csv("data/export_figure_2_6_states.csv")
+data_tab1_6states <- deposit_details %>%
+  filter(name == "data_iframe_2a.csv") %>%
+  select(download_url) %>%
+  .[[1]] %>%
+  read_csv()
+
 colnames(data_tab1_6states) <- make.names(trimws(tolower(colnames(data_tab1_6states))))
 
 data_6states <- read_csv("data/export_figure_2_6_states.csv")
@@ -37,7 +49,12 @@ data_tab1_6states <- data_tab1_6states %>%
 
 ##### ======= tab2
 ##### ============== 
-data_tab2_2states <- read_csv("data/data_iframe_2b.csv")
+
+data_tab2_2states <- deposit_details %>%
+  filter(name == "data_iframe_2b.csv") %>%
+  select(download_url) %>%
+  .[[1]] %>%
+  read_csv()
 colnames(data_tab2_2states) <- make.names(trimws(tolower(colnames(data_tab2_2states))))
 
 
@@ -59,7 +76,11 @@ data_tab2_2states <- data_tab2_2states %>%
 
 ##### ======= tab3
 ##### ============== 
-data_tab3_3states <- read_csv("data/data_iframe_2c.csv")
+data_tab3_3states <- deposit_details %>%
+  filter(name == "data_iframe_2c.csv") %>%
+  select(download_url) %>%
+  .[[1]] %>%
+  read_csv()
 colnames(data_tab3_3states) <- make.names(trimws(tolower(colnames(data_tab3_3states))))
 
 
@@ -81,7 +102,11 @@ data_tab3_3states <- data_tab3_3states %>%
 
 ##### ======= tab4
 ##### ============== 
-data_tab4_10states <- read_csv("data/data_iframe_2d.csv")
+data_tab4_10states <- deposit_details %>%
+  filter(name == "data_iframe_2d.csv") %>%
+  select(download_url) %>%
+  .[[1]] %>%
+  read_csv()
 colnames(data_tab4_10states) <- make.names(trimws(tolower(colnames(data_tab4_10states))))
 
 

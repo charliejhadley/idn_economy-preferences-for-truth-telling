@@ -2,23 +2,9 @@ observeEvent(input$tab1_6states_reset, {
   shinyjs::reset("tab1_6states_controls")
 })
 
-output$tab1_6states_selected_continents_UI <- renderUI({
-  selectInput(
-    "tab1_6states_selected_continents",
-    label = "Selected Continents",
-    choices = unique(data_tab1_6states$continent),
-    selected = unique(data_tab1_6states$continent),
-    multiple = TRUE
-  )
-})
-
 output$tab1_6states_selected_countries_UI <- renderUI({
-  if (is.null(input$tab1_6states_selected_continents)) {
-    return()
-  }
   
   available_countries <- data_tab1_6states %>%
-    filter(continent %in% input$tab1_6states_selected_continents) %>%
     select(country) %>%
     .[[1]] %>%
     unique()
@@ -27,22 +13,17 @@ output$tab1_6states_selected_countries_UI <- renderUI({
   selectInput(
     "tab1_6states_selected_countries",
     label = "Countries to show",
-    choices = available_countries,
+    choices = sort(available_countries),
     selected = NULL,
-    multiple = TRUE
+    multiple = TRUE,
+    width = "100%"
   )
 })
 
-
-
 output$tab1_6states_citation_selectize_UI <- renderUI({
-  if (is.null(input$tab1_6states_selected_continents)) {
-    return()
-  }
   
   if (is.null(input$tab1_6states_selected_countries)) {
     available_citations <- data_tab1_6states %>%
-      filter(continent %in% input$tab1_6states_selected_continents) %>%
       select(citation) %>%
       .[[1]] %>%
       unique()
@@ -57,96 +38,160 @@ output$tab1_6states_citation_selectize_UI <- renderUI({
   selectInput(
     "tab1_6states_citation_selectize",
     label = "Studies to show",
-    choices = available_citations,
+    choices = sort(available_citations),
     selected = NULL,
-    multiple = TRUE
+    multiple = TRUE,
+    width = "100%"
   )
-  ## If nothing selected, don't use!
 })
 
-data_tab1_6states_line_hc <- eventReactive(
-  c(
-    input$tab1_6states_incentive_range,
-    input$tab1_6states_population_options,
-    input$tab1_6states_citation_selectize,
-    input$tab1_6states_selected_countries,
-    input$tab1_6states_selected_continents
-  ),
-  {
-    data_tab1_6states <- data_tab1_6states %>%
-      filter(
-        payoff_mm >= as.numeric(input$tab1_6states_incentive_range[1]) &
-          payoff_mm <= as.numeric(input$tab1_6states_incentive_range[2])
-      )
-    
-    
-    switch(
+data_tab1_6states_line_hc <-
+  eventReactive(
+    c(
       input$tab1_6states_population_options,
-      "0" = {
-        data_tab1_6states <- data_tab1_6states %>%
-          filter(student == 0)
-      },
-      "1" = {
-        data_tab1_6states <- data_tab1_6states %>%
-          filter(student == 1)
-      },
-      "2" = {
+      input$tab1_6states_citation_selectize,
+      input$tab1_6states_repeated_or_oneshot,
+      input$tab1_6states_location,
+      input$tab1_6states_controls_suggested,
+      input$tab1_6states_draw_or_mind,
+      input$tab1_6states_selected_countries
+    ),
+    {
+      
+      if(is.null(input$tab1_6states_selected_countries)){
         data_tab1_6states <- data_tab1_6states
+      } else {
+        data_tab1_6states <- data_tab1_6states %>%
+          filter(country %in% input$tab1_6states_selected_countries)
       }
-    )
-    
-    if (!is.null(input$tab1_6states_citation_selectize)) {
-      data_tab1_6states <- data_tab1_6states %>%
-        filter(citation %in% input$tab1_6states_citation_selectize)
-    }
 
-    
-    
-    
-    data_tab1_6states
-    
-  },
-  ignoreInit = FALSE
-)
+      switch(
+        input$tab1_6states_population_options,
+        "0" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(student == 0)
+        },
+        "1" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(student == 1)
+        },
+        "both" = {
+          data_tab1_6states <- data_tab1_6states
+        }
+      )
+      
+      switch(
+        input$tab1_6states_repeated_or_oneshot,
+        "0" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(repeated == 0)
+        },
+        "1" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(repeated == 1)
+        },
+        "both" = {
+          data_tab1_6states <- data_tab1_6states
+        }
+      )
+      
+      switch(
+        input$tab1_6states_location,
+        "0" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(remote == 0)
+        },
+        "1" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(remote == 1)
+        },
+        "both" = {
+          data_tab1_6states <- data_tab1_6states
+        }
+      )
+      
+      switch(
+        input$tab1_6states_controls_suggested,
+        "0" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(control_rolls == 0)
+        },
+        "1" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(control_rolls == 1)
+        },
+        "both" = {
+          data_tab1_6states <- data_tab1_6states
+        }
+      )
+      
+      switch(
+        input$tab1_6states_draw_or_mind,
+        "0" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(internal_lying == 0)
+        },
+        "1" = {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(internal_lying == 1)
+        },
+        "both" = {
+          data_tab1_6states <- data_tab1_6states
+        }
+      )
+      
+      if (nrow(data_tab1_6states) == 0) {
+        # no data
+        return(data_frame())
+      } else {
+        if (!is.null(input$tab1_6states_citation_selectize)) {
+          data_tab1_6states <- data_tab1_6states %>%
+            filter(citation %in% input$tab1_6states_citation_selectize)
+        }
+      }
+      
+      data_tab1_6states
+      
+      
+    },
+    ignoreNULL = TRUE
+  )
+
+
+output$tab1_6states_line_hc_UI <- renderUI({
+  
+  show("loading-tab1_bubblechart")
+  if (is.null(highchartOutput("tab1_6states_line_hc"))) {
+    "empty"
+  } else {
+    highchartOutput("tab1_6states_line_hc")
+  }
+  
+})
 
 output$tab1_6states_line_hc <- renderHighchart({
-  if (is.null(input$tab1_6states_selected_continents)) {
-    return()
-  }
-  
-  
+
   data_tab1_6states_line_hc <- data_tab1_6states_line_hc()
   
-  if(nrow(data_tab1_6states_line_hc) == 0){
-    print("nrow == 0 ")
-    highchart()
-  } else {
-    print("nrow =!= 0")
-  }
   
-  if (is.null(input$tab1_6states_selected_countries)) {
-    selected_countries <- data_tab1_6states_line_hc %>%
-      filter(continent %in% input$tab1_6states_selected_continents) %>%
-      select(country) %>%
-      .[[1]] %>%
-      unique()
-  } else {
-    selected_countries <- data_tab1_6states_line_hc %>%
-      filter(country %in% input$tab1_6states_selected_countries) %>%
-      select(country) %>%
-      .[[1]] %>%
-      unique()
-  }
-  
-  data_tab1_6states_line_hc <- data_tab1_6states_line_hc %>%
-    filter(country %in% selected_countries)
   
   if(nrow(data_tab1_6states_line_hc) == 0){
-    print("nrow == 0 here")
+    highchart()
+  } 
+  
+  
+  if(nrow(data_tab1_6states_line_hc) == 0){
+
     highchart()
   } else {
-    hchart(
-      data_tab1_6states_line_hc,
+    hc <- hchart(
+      data_tab1_6states_line_hc %>%
+        select(standardized_report_per_round,
+               percent,
+               treatment,
+               colour,
+               citation,
+               country),
       "line",
       hcaes(
         x = standardized_report_per_round,
@@ -160,7 +205,11 @@ output$tab1_6states_line_hc <- renderHighchart({
       marker = list(enabled = FALSE,
                     radius = 0),
       showInLegend = FALSE,
-      states = list(hover = list(lineWidthPlus = 4))
+      enableMouseTracking = TRUE,
+      states = list(hover = list(lineWidthPlus = 5,
+                                 halo = list(
+                                   size = 9
+                                 )))
     ) %>%
       hc_plotOptions(
         line = list(
@@ -186,18 +235,29 @@ output$tab1_6states_line_hc <- renderHighchart({
           '<b>Percent: </b>' + Highcharts.numberFormat(this.point.y, 2);
   }"
         )
-        ) %>%
+        ) 
+    
+    hc <- hc %>%
       hc_add_series(
-        data = data_tab1_6states_line_hc,
+        data = data_tab1_6states_line_hc %>%
+          select(standardized_report_per_round,
+                 percent,
+                 subjects,
+                 colour,
+                 country,
+                 treatment,
+                 citation),
         type = "bubble",
         hcaes(
           x = standardized_report_per_round,
           y = percent,
-          size = subjects,
-          color = colour
+          z = subjects,
+          color = colour,
+          name = country,
+          group = treatment
         ),
         showInLegend = FALSE,
-        enableMouseTracking = FALSE,
+        enableMouseTracking = TRUE,
         states = list(hover = list(enabled = TRUE)),
         tooltip = list(
           enabled = FALSE
@@ -219,9 +279,53 @@ output$tab1_6states_line_hc <- renderHighchart({
           color = "black",
           dashStyle = "Dash"
         ))
-      )
+      ) %>%
+      hc_add_event_point(event = "click")
+    
+    hide("loading-tab1_6states")
+    
+    hc
+    
   }
   
   
   
   })
+
+
+observeEvent(input$tab1_6states_line_hc_click,
+             {
+               toggleModal(session, "tab1_6states_bubbleModal", toggle = "toggle")
+             })
+
+output$tab1_6states_bubble_model_UI <- renderUI({
+  
+  data_tab1_6states_line_hc <- data_tab1_6states_line_hc()
+  x_coord <- input$tab1_6states_line_hc_click$x
+  y_coord <- input$tab1_6states_line_hc_click$y
+  point_treatment <- input$tab1_6states_line_hc_click$series
+  point_country <- input$tab1_6states_line_hc_click$name
+
+  study <- data_tab1_6states_line_hc %>%
+    filter(standardized_report_per_round == x_coord) %>%
+    filter(country == point_country) %>%
+    filter(treatment == point_treatment)
+
+  url <- study[["weblink"]]
+
+  if (is.na(url)) {
+    weblink <- p(strong("Weblink: "), "No link provided!")
+  } else {
+    weblink <-
+      p(strong("Weblink: "),
+        tags$a(href = url, url, target = "_blank"))
+  }
+  print(study)
+  fluidPage(p(strong("Citation: "), study[["citation"]]),
+            p(strong("Title: "), study[["paper_title"]]),
+            p(strong("Country: "), study[["country"]]),
+            p(strong("Number of subjects: "), study[["subjects"]]),
+            weblink)
+
+})
+
