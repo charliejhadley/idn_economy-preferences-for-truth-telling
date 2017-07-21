@@ -1,8 +1,17 @@
+fs_deposit_id <- 4981589
+deposit_details <- fs_details(fs_deposit_id)
+
+deposit_details <- unlist(deposit_details$files)
+deposit_details <- data.frame(split(deposit_details, names(deposit_details)),stringsAsFactors = F) %>% as_tibble()
 
 
 ## ==== Tab 1
 ## ==========
-data_tab1_world_map <- read_csv("data/data_iframe_3a.csv")
+data_tab1_world_map <- deposit_details %>%
+  filter(name == "data_iframe_3a.csv") %>%
+  select(download_url) %>%
+  .[[1]] %>%
+  read_csv()
 
 ## Get participating countries
 participating_countries <- data_tab1_world_map %>%
@@ -18,20 +27,25 @@ shapefiles_participating_countries <-
 
 ## Add preferences for truth data to the shapefiles
 
-shapefiles_participating_countries@data <-
-  as_data_frame(shapefiles_participating_countries@data) %>%
+shapefiles_participating_countries <-
+  shapefiles_participating_countries %>%
   rename(country = name) %>%
-  full_join(data_tab1_world_map, by = "country") %>%
-  as.data.frame(stringAsFactors = FALSE)
+  full_join(data_tab1_world_map, by = "country")
 
-
-shapefiles_participating_countries$scaled_std_report_per_round <-
-  rescale(shapefiles_participating_countries$standardized_report_per_round,
-          to = c(1, 100))
+shapefiles_participating_countries <- shapefiles_participating_countries %>%
+  mutate(standardized_report_per_round = rescale(standardized_report_per_round,
+                                                 to = c(1, 100)))
 
 ## ==== Tab 2
 ## ==========
-data_tab2_scatterplot <- read_csv("data/data_iframe_3b.csv")
+data_tab2_scatterplot <- deposit_details %>%
+  filter(name == "data_iframe_3b.csv") %>%
+  select(download_url) %>%
+  .[[1]] %>%
+  read_csv()
+
+
+data_tab2_scatterplot
 
 ## There's badly formatted entry here which I filter out:
 data_tab2_scatterplot <- data_tab2_scatterplot %>%

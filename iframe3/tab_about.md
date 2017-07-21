@@ -1,6 +1,7 @@
-<img src="images/uni-oxford-logo.png"/>
-<img src="images/uni-nottingham-logo.png"/>
-<img src="images/logo.png"/>
+<center><img src="images/uni-oxford-logo.png" style="padding: 28px"/>
+<img src="images/uni-nottingham-logo.png" style="padding: 28px"/>
+<img src="images/logo.png" style="padding: 28px"/>
+</center>
 
 **Paper Title:** Preferences for Truth-telling.
 
@@ -8,9 +9,9 @@
 
 **DOI:** [http://ftp.iza.org/dp10188.pdf](http://ftp.iza.org/dp10188.pdf)
 
-**Data Deposit:** (Awaiting author)
+**Data Deposit:** <a href="https://doi.org/10.6084/m9.figshare.4981589" target="_blank">https://doi.org/10.6084/m9.figshare.4981589</a>
 
-**Code Deposit:** (Awaiting author).
+**Code Deposit:** <a href="https://doi.org/10.6084/m9.figshare.5217316" target="_blank">https://doi.org/10.6084/m9.figshare.5217316</a>
 
 **Visualisation Developer:** Martin John Hadley
 

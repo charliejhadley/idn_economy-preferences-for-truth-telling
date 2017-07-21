@@ -21,14 +21,14 @@ output$tab1_worldmap_leaflet <- renderLeaflet({
     paste(
       "Country:", country,
       "<br>",
-      "Standardised report per round:",st_report_per_round
+      "Standardised report:",round(st_report_per_round,2)
     )
   }
   
-  shapefiles_participating_countries %>%
+  map <- shapefiles_participating_countries %>%
     leaflet() %>%
     # addTiles() %>%
-    addProviderTiles(providers$CartoDB.PositronNoLabels) %>%
+    addProviderTiles(providers$CartoDB.PositronNoLabels, options = leafletOptions(worldCopyJump = FALSE)) %>%
     addPolygons(
       fillColor = ~ world_map_palette(standardized_report_per_round),
       popup = ~ world_map_popup(country, standardized_report_per_round),
@@ -36,26 +36,37 @@ output$tab1_worldmap_leaflet <- renderLeaflet({
       weight = 1
     ) %>%
     addLegend(
-      position = 'bottomright',
-      ## choose bottomleft, bottomright, topleft or topright
-      colors = c(brewer.pal(length(
-        pretty(
-          shapefiles_participating_countries$standardized_report_per_round
-        )
-      ) - 1, "YlGnBu")),
-      labels = c(
-        "-0.1 - 0.0",
-        "0.0 - 0.1",
-        "0.1 - 0.2",
-        "0.2 - 0.3",
-        "0.3 - 0.4",
-        "0.4 - 0.5",
-        "0.5 - 0.6"
-      ),
+      pal = world_map_palette,
+      values = ~standardized_report_per_round,
       opacity = 0.6,
       ##transparency again
       title = "Standardized report per round"
     )
+    # addLegend(
+    #   position = 'bottomright',
+    #   ## choose bottomleft, bottomright, topleft or topright
+    #   colors = c(brewer.pal(length(
+    #     pretty(
+    #       shapefiles_participating_countries$standardized_report_per_round
+    #     )
+    #   ) - 1, "YlGnBu")),
+    #   labels = c(
+    #     "-0.1 - 0.0",
+    #     "0.0 - 0.1",
+    #     "0.1 - 0.2",
+    #     "0.2 - 0.3",
+    #     "0.3 - 0.4",
+    #     "0.4 - 0.5",
+    #     "0.5 - 0.6"
+    #   ),
+    #   opacity = 0.6,
+    #   ##transparency again
+    #   title = "Standardized report per round"
+    # )
+  
+  hide("loading-tab1_worldmap")
+  
+  map
   
 })
 
