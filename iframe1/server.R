@@ -12,8 +12,13 @@ source("beta-highchart-feature.R", local = TRUE)
 shinyServer(
   function(input, output, session){
     
-    source("figure1.R", local = TRUE)$value
-    source("figureA2.R", local = TRUE)$value
+    ## this calls the contents of url_allowPopout.R as if it was copied and 
+    ## pasted directly into the shinyServer function. This allows the 
+    ## output$url_allow_popout_UI to be displayed in the client
+    source("url_allowPopout.R", local = TRUE)
+    
+    source("tab1_bubblechart.R", local = TRUE)$value
+    source("tab2_linechart.R", local = TRUE)$value
     
   }
 )

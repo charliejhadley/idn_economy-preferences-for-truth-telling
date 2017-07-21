@@ -9,14 +9,15 @@ shinyUI(navbarPage(
   tabPanel(
     "Average report by incentive level",
     fluidPage(
+      uiOutput("url_allow_popout_UI"),
       includeCSS("www/animate.min.css"),
       # provides pulsating effect
       includeCSS("www/loading-content.css"),
       fluidRow(
         column(
-          actionButton("fig1_reset", "Back to full sample"),
+          actionButton("tab1_bubblechart_reset", "Back to full sample"),
           bsTooltip(
-            "fig1_reset",
+            "tab1_bubblechart_reset",
             "Click here to return the visualisation to our defaults",
             "bottom",
             options = list(container = "body")
@@ -24,12 +25,12 @@ shinyUI(navbarPage(
           width = 3
         ),
         div(
-          id = "fig1_controls",
+          id = "tab1_bubblechart_controls",
           # div provides the target for the reset button,
           fluidPage(
             column(
               radioButtons(
-                "fig1_population_options",
+                "tab1_bubblechart_population_options",
                 label = "Students vs General Population",
                 choices = list(
                   "Both" = "both",
@@ -42,9 +43,9 @@ shinyUI(navbarPage(
               width = 5
             ),
             column(
-              uiOutput("fig1_selected_countries_UI"),
+              uiOutput("tab1_bubblechart_selected_countries_UI"),
               bsTooltip(
-                "fig1_selected_countries_UI",
+                "tab1_bubblechart_selected_countries_UI",
                 "Filter the experiments by continents by deleting/adding their names",
                 "bottom",
                 options = list(container = "body")
@@ -61,22 +62,22 @@ shinyUI(navbarPage(
             ),
             fluidRow(
               column(
-                uiOutput("fig1_citation_selectize_UI"),
+                uiOutput("tab1_bubblechart_citation_selectize_UI"),
                 bsTooltip(
-                  "fig1_citation_selectize_UI",
+                  "tab1_bubblechart_citation_selectize_UI",
                   "Filter the experiments by citations by deleting/adding their names",
                   "bottom",
                   options = list(container = "body")
                 ),
-                uiOutput("fig1_selected_true_distribution_UI"),
+                uiOutput("tab1_bubblechart_selected_true_distribution_UI"),
                 bsTooltip(
-                  "fig1_selected_true_distribution_UI",
+                  "tab1_bubblechart_selected_true_distribution_UI",
                   "Filter the experiments by true distribution.",
                   "bottom",
                   options = list(container = "body")
                 ),
                 radioButtons(
-                  "fig1_location",
+                  "tab1_bubblechart_location",
                   label = "Experiment location?",
                   choices = list(
                     "Both" = "both",
@@ -90,7 +91,7 @@ shinyUI(navbarPage(
               ),
               column(
                 radioButtons(
-                  "fig1_controls_suggested",
+                  "tab1_bubblechart_controls_suggested",
                   label = "Control Rolls Suggested?",
                   choices = list(
                     "Both" = "both",
@@ -101,18 +102,18 @@ shinyUI(navbarPage(
                   inline = TRUE
                 ),
                 radioButtons(
-                  "fig1_draw_or_mind",
+                  "tab1_bubblechart_draw_or_mind",
                   label = "Was random draw or state of mind reported?",
                   choices = list(
                     "Both" = "both",
-                    "Reporting random draw" = 1,
-                    "Reporting State of Mind" = 0
+                    "Reporting random draw" = 0,
+                    "Reporting State of Mind" = 1
                   ),
                   selected = "both",
                   inline = TRUE
                 ),
                 radioButtons(
-                  "fig1_repeated_or_oneshot",
+                  "tab1_bubblechart_repeated_or_oneshot",
                   label = "Repeated vs. One-shot Reporting",
                   choices = list(
                     "Both" = "both",
@@ -131,16 +132,16 @@ shinyUI(navbarPage(
         )
       ),
       div(
-        id = "loading-fig1",
+        id = "loading-tab1_bubblechart",
         class = "loading-content",
         h2(class = "animated infinite pulse", "Loading data...")
       ),
-      # highchartOutput("fig1_hc_bubble")
-      uiOutput("fig1_hc_bubble_UI"),
+      # highchartOutput("tab1_bubblechart_hc_bubble")
+      uiOutput("tab1_bubblechart_hc_bubble_UI"),
       bsModal(
         "bubbleModal",
         "Study Info",
-        trigger = "fig1_hc_bubble_click",
+        trigger = "tab1_bubblechart_hc_bubble_click",
         size = "large",
         uiOutput("bubble_model_UI")
       )
@@ -148,10 +149,11 @@ shinyUI(navbarPage(
   ),
   tabPanel(
     "Distribution of reports by incentive level",
-    fluidPage(highchartOutput("figA2_hc", height = "500px"))
+    fluidPage(highchartOutput("tab2_linechart_hc", height = "500px"))
   ),
   tabPanel("About",
            fluidPage(includeMarkdown(
              knitr::knit("tab_about.Rmd")
-           )))
+           ))),
+  collapsible = TRUE
 ))
