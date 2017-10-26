@@ -4,10 +4,10 @@ library(shinyBS)
 library(highcharter)
 
 shinyUI(navbarPage(
-  useShinyjs(),
   "Experimental Economics",
   tabPanel("World Map",
            fluidPage(
+             useShinyjs(),
              uiOutput("url_allow_popout_UI"),
              div(
                id = "loading-tab1_worldmap",

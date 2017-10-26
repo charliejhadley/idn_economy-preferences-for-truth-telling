@@ -5,12 +5,12 @@ library(highcharter)
 
 shinyUI(
   navbarPage(
-    useShinyjs(),
     "Experimental Economics",
     tabPanel(
       "Average Report over Repetitions",
       
       fluidPage(
+        useShinyjs(),
         uiOutput("url_allow_popout_UI"),
         includeCSS("www/animate.min.css"),
         # provides pulsating effect

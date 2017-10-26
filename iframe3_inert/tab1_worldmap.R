@@ -42,27 +42,6 @@ output$tab1_worldmap_leaflet <- renderLeaflet({
       ##transparency again
       title = "Standardized report per round"
     )
-    # addLegend(
-    #   position = 'bottomright',
-    #   ## choose bottomleft, bottomright, topleft or topright
-    #   colors = c(brewer.pal(length(
-    #     pretty(
-    #       shapefiles_participating_countries$standardized_report_per_round
-    #     )
-    #   ) - 1, "YlGnBu")),
-    #   labels = c(
-    #     "-0.1 - 0.0",
-    #     "0.0 - 0.1",
-    #     "0.1 - 0.2",
-    #     "0.2 - 0.3",
-    #     "0.3 - 0.4",
-    #     "0.4 - 0.5",
-    #     "0.5 - 0.6"
-    #   ),
-    #   opacity = 0.6,
-    #   ##transparency again
-    #   title = "Standardized report per round"
-    # )
   
   hide("loading-tab1_worldmap")
   

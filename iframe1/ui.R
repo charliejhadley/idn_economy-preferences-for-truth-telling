@@ -4,11 +4,11 @@ library(shinyjs)
 library(shinyBS)
 
 shinyUI(navbarPage(
-  useShinyjs(),
   "Experimental Economics",
   tabPanel(
     "Average report by incentive level",
     fluidPage(
+      useShinyjs(),
       uiOutput("url_allow_popout_UI"),
       includeCSS("www/animate.min.css"),
       # provides pulsating effect

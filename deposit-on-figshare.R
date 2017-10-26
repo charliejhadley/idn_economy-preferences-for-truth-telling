@@ -24,6 +24,7 @@ update_fs_article <-
     if (publish == TRUE) {
       fs_make_public(fs.id)
     }
+    unlink(zip.name)
   }
 
 update_fs_article(
@@ -38,3 +39,5 @@ update_fs_article(
     "requirements"
   )
 )
+
+

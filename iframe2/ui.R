@@ -5,11 +5,11 @@ library(shinyBS)
 
 shinyUI(
   navbarPage(
-    useShinyjs(),
     "Experimental Economics",
     tabPanel(
       "Distribution of reports: 6 states",
       fluidPage(
+        useShinyjs(),
         uiOutput("url_allow_popout_UI"),
         includeCSS("www/animate.min.css"),
         # provides pulsating effect
