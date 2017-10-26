@@ -5,17 +5,17 @@ library(highcharter)
 
 shinyUI(
   navbarPage(
-    useShinyjs(),
     "Experimental Economics",
     tabPanel(
       "Distribution by gender",
       fluidPage(
+        useShinyjs(),
         uiOutput("url_allow_popout_UI"),
         fluidRow(
           column(
-            actionButton("tab2_linechart_reset", "Back to full sample"),
+            actionButton("tab1_linechart_reset", "Back to full sample"),
             bsTooltip(
-              "tab2_linechart_reset",
+              "tab1_linechart_reset",
               "Click here to return the visualisation to our defaults",
               "bottom",
               options = list(container = "body")
@@ -23,12 +23,12 @@ shinyUI(
             width = 3
           ),
           div(
-            id = "tab2_linechart_controls",
+            id = "tab1_linechart_controls",
             # div provides the target for the reset button,
             fluidPage(
               column(
                 radioButtons(
-                  "tab2_linechart_population_options",
+                  "tab1_linechart_population_options",
                   label = "Students vs General Population",
                   choices = list(
                     "Both" = "both",
@@ -41,9 +41,9 @@ shinyUI(
                 width = 5
               ),
               column(
-                uiOutput("tab2_linechart_selected_countries_UI"),
+                uiOutput("tab1_linechart_selected_countries_UI"),
                 bsTooltip(
-                  "tab2_linechart_selected_countries_UI",
+                  "tab1_linechart_selected_countries_UI",
                   "Filter the experiments by continents by deleting/adding their names",
                   "bottom",
                   options = list(container = "body")
@@ -59,15 +59,15 @@ shinyUI(
             ),
             fluidRow(
               column(
-                uiOutput("tab2_linechart_citation_selectize_UI"),
+                uiOutput("tab1_linechart_citation_selectize_UI"),
                 bsTooltip(
-                  "tab2_linechart_citation_selectize_UI",
+                  "tab1_linechart_citation_selectize_UI",
                   "Filter the experiments by citations by deleting/adding their names",
                   "bottom",
                   options = list(container = "body")
                 ),
                 radioButtons(
-                  "tab2_linechart_location",
+                  "tab1_linechart_location",
                   label = "Experiment location?",
                   choices = list(
                     "Both" = "both",
@@ -81,7 +81,7 @@ shinyUI(
               ),
               column(
                 radioButtons(
-                  "tab2_linechart_controls_suggested",
+                  "tab1_linechart_controls_suggested",
                   label = "Control Rolls Suggested?",
                   choices = list(
                     "Both" = "both",
@@ -92,7 +92,7 @@ shinyUI(
                   inline = TRUE
                 ),
                 radioButtons(
-                  "tab2_linechart_draw_or_mind",
+                  "tab1_linechart_draw_or_mind",
                   label = "Was random draw or state of mind reported?",
                   choices = list(
                     "Both" = "both",
@@ -103,7 +103,7 @@ shinyUI(
                   inline = TRUE
                 ),
                 radioButtons(
-                  "tab2_linechart_repeated_or_oneshot",
+                  "tab1_linechart_repeated_or_oneshot",
                   label = "Repeated vs. One-shot Reporting",
                   choices = list(
                     "Both" = "both",
@@ -121,18 +121,18 @@ shinyUI(
           )
         ),
         # div(
-        #   id = "loading-tab2_linechart",
+        #   id = "loading-tab1_linechart",
         #   class = "loading-content",
         #   h2(class = "animated infinite pulse", "Loading data...")
         # ),
-        # highchartOutput("tab2_linechart_hc_bubble")
-        uiOutput("tab2_linechart_hc_UI"),
+        # highchartOutput("tab1_linechart_hc_bubble")
+        uiOutput("tab1_linechart_hc_UI"),
         bsModal(
-          "tab2_linechart_bubbleModal",
+          "tab1_linechart_bubbleModal",
           "Study Info",
-          trigger = "tab2_linechart_hc_click",
+          trigger = "tab1_linechart_hc_click",
           size = "large",
-          uiOutput("tab2_linechart_bubble_model_UI")
+          uiOutput("tab1_linechart_bubble_model_UI")
         )
         
       )
@@ -147,9 +147,9 @@ shinyUI(
         includeCSS("www/loading-content.css"),
         fluidRow(
           column(
-            actionButton("tab1_scatter_reset", "Back to full sample"),
+            actionButton("tab2_scatter_reset", "Back to full sample"),
             bsTooltip(
-              "tab1_scatter_reset",
+              "tab2_scatter_reset",
               "Click here to return the visualisation to our defaults",
               "bottom",
               options = list(container = "body")
@@ -157,12 +157,12 @@ shinyUI(
             width = 3
           ),
           div(
-            id = "tab1_scatter_controls",
+            id = "tab2_scatter_controls",
             # div provides the target for the reset button,
             fluidPage(
               column(
                 radioButtons(
-                  "tab1_scatter_population_options",
+                  "tab2_scatter_population_options",
                   label = "Students vs General Population",
                   choices = list(
                     "Both" = "both",
@@ -175,9 +175,9 @@ shinyUI(
                 width = 5
               ),
               column(
-                uiOutput("tab1_scatter_selected_countries_UI"),
+                uiOutput("tab2_scatter_selected_countries_UI"),
                 bsTooltip(
-                  "tab1_scatter_selected_countries_UI",
+                  "tab2_scatter_selected_countries_UI",
                   "Filter the experiments by continents by deleting/adding their names",
                   "bottom",
                   options = list(container = "body")
@@ -193,15 +193,15 @@ shinyUI(
             ),
             fluidRow(
               column(
-                uiOutput("tab1_scatter_citation_selectize_UI"),
+                uiOutput("tab2_scatter_citation_selectize_UI"),
                 bsTooltip(
-                  "tab1_scatter_citation_selectize_UI",
+                  "tab2_scatter_citation_selectize_UI",
                   "Filter the experiments by citations by deleting/adding their names",
                   "bottom",
                   options = list(container = "body")
                 ),
                 radioButtons(
-                  "tab1_scatter_location",
+                  "tab2_scatter_location",
                   label = "Experiment location?",
                   choices = list(
                     "Both" = "both",
@@ -215,7 +215,7 @@ shinyUI(
               ),
               column(
                 radioButtons(
-                  "tab1_scatter_controls_suggested",
+                  "tab2_scatter_controls_suggested",
                   label = "Control Rolls Suggested?",
                   choices = list(
                     "Both" = "both",
@@ -226,7 +226,7 @@ shinyUI(
                   inline = TRUE
                 ),
                 radioButtons(
-                  "tab1_scatter_draw_or_mind",
+                  "tab2_scatter_draw_or_mind",
                   label = "Was random draw or state of mind reported?",
                   choices = list(
                     "Both" = "both",
@@ -237,7 +237,7 @@ shinyUI(
                   inline = TRUE
                 ),
                 radioButtons(
-                  "tab1_scatter_repeated_or_oneshot",
+                  "tab2_scatter_repeated_or_oneshot",
                   label = "Repeated vs. One-shot Reporting",
                   choices = list(
                     "Both" = "both",
@@ -255,18 +255,18 @@ shinyUI(
           )
         ),
         div(
-          id = "loading-tab1_scatter",
+          id = "loading-tab2_scatter",
           class = "loading-content",
           h2(class = "animated infinite pulse", "Loading data...")
         ),
-        # highchartOutput("tab1_scatter_hc_bubble")
-        uiOutput("tab1_scatter_hc_UI"),
+        # highchartOutput("tab2_scatter_hc_bubble")
+        uiOutput("tab2_scatter_hc_UI"),
         bsModal(
-          "tab1_scatter_bubbleModal",
+          "tab2_scatter_bubbleModal",
           "Study Info",
-          trigger = "tab1_scatter_hc_click",
+          trigger = "tab2_scatter_hc_click",
           size = "large",
-          uiOutput("tab1_scatter_bubble_model_UI")
+          uiOutput("tab2_scatter_bubble_model_UI")
         )
       )
     ),

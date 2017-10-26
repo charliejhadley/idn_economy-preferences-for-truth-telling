@@ -21,19 +21,20 @@ update_fs_article <-
     zip(zip.name, files_to_zip)
     fs_upload(fs.id, zip.name)
     
-    if (publish = TRUE) {
+    if (publish == TRUE) {
       fs_make_public(fs.id)
     }
   }
 
 update_fs_article(
-  4750702,
-  "parv_prevalence_treemap.zip",
+  5217316,
+  "Preferences_for_truth-telling_visualisations.zip",
   files.to.ignore = c(
     "rsconnect",
     ".httr-oauth",
     "deposit-on-figshare.R",
     "economy_preferences_for_truth_telling.Rproj",
-    "Meeting-Notes.Rmd"
+    "Meeting-Notes.Rmd",
+    "requirements"
   )
 )

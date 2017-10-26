@@ -21,9 +21,9 @@ shinyServer(
     ## output$url_allow_popout_UI to be displayed in the client
     source("url_allowPopout.R", local = TRUE)
     
-    source("tab1_scatter.R", local = TRUE)$value
+    source("tab2_scatter.R", local = TRUE)$value
     
-    source("tab2_linechart.R", local = TRUE)$value
+    source("tab1_linechart.R", local = TRUE)$value
     
     source("beta-highchart-feature.R", local = TRUE)
   }
