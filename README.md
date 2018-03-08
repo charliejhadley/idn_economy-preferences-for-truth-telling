@@ -6,5 +6,4 @@ The academic contact for this work is is (Dr. Johannes Abeler)[http://orcid.org/
 
 <img src="preferences-for-truth-telling-screenshot.png" width="600px"></img>
 
-
 This code has been deposited on Figshare: http://doi.org/10.6084/m9.figshare.5539942
