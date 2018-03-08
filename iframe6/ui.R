@@ -5,7 +5,7 @@ library(shinyBS)
 
 shinyUI(
   navbarPage(
-    "Experimental Economics",
+    "",
     tabPanel(
       "Distribution of reports: 6 states",
       fluidPage(

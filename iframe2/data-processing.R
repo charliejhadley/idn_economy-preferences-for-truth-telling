@@ -15,7 +15,7 @@ data_tab1_6states <- deposit_details %>%
 
 colnames(data_tab1_6states) <- make.names(trimws(tolower(colnames(data_tab1_6states))))
 
-data_6states <- read_csv("data/export_figure_2_6_states.csv")
+# data_6states <- read_csv("data/export_figure_2_6_states.csv")
 # 
 # 
 # data_tab1_6states <- data_tab1_6states %>%

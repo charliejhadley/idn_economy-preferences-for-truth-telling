@@ -4,7 +4,7 @@ library(shinyjs)
 library(shinyBS)
 
 shinyUI(navbarPage(
-  "Experimental Economics",
+  "",
   tabPanel(
     "Average report by incentive level",
     fluidPage(

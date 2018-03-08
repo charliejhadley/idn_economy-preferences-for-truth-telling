@@ -272,21 +272,22 @@ output$tab1_6states_bubble_model_UI <- renderUI({
   print("the study")
   print(study)
   
-  # url <- study[["weblink"]]
-  # 
-  # if (is.na(url)) {
-  #   weblink <- p(strong("Weblink: "), "No link provided!")
-  # } else {
-  #   weblink <-
-  #     p(strong("Weblink: "),
-  #       tags$a(href = url, url, target = "_blank"))
-  # }
+  url <- study[["weblink"]]
+
+  if (is.na(url)) {
+    weblink <- p(strong("Weblink: "), "No link provided!")
+  } else {
+    weblink <-
+      p(strong("Weblink: "),
+        tags$a(href = url, url, target = "_blank"))
+  }
   
   fluidPage(p(strong("Citation: "), study[["citation"]]),
             p(strong("Title: "), study[["paper_title"]]),
             p(strong("Country: "), study[["country"]]),
-            p(strong("Number of subjects: "), study[["subjects"]])
+            p(strong("Number of subjects: "), study[["subjects"]]),
             # weblink
+            weblink
             )
 
 })

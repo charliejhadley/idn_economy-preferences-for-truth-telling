@@ -7,11 +7,11 @@
 
 **Authors:** Johannes Abeler, Daniele Nosenzo and Collin Raymond.
 
-**DOI:** [http://ftp.iza.org/dp10188.pdf](http://ftp.iza.org/dp10188.pdf)
+**DOI:** <a href="http://ftp.iza.org/dp10188.pdf" target="_blank">http://ftp.iza.org/dp10188.pdf</a>
 
 **Data Deposit:** <a href="https://doi.org/10.6084/m9.figshare.4981589" target="_blank">https://doi.org/10.6084/m9.figshare.4981589</a>
 
-**Code Deposit:** <a href="https://doi.org/10.6084/m9.figshare.5217316" target="_blank">https://doi.org/10.6084/m9.figshare.5217316</a>
+**Code Deposit:** <a href="http://doi.org/10.6084/m9.figshare.5539942" target="_blank">http://doi.org/10.6084/m9.figshare.5539942</a>
 
 **Visualisation Developer:** Martin John Hadley
 

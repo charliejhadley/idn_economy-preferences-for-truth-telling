@@ -1,128 +1,3 @@
-observeEvent(input$tab2_scatterplot_reset, {
-  shinyjs::reset("tab2_scatterplot_controls")
-})
-
-output$tab2_scatterplot_citation_selectize_UI <- renderUI({
-  available_citations <- data_tab2_scatterplot %>%
-    select(citation) %>%
-    .[[1]] %>%
-    unique()
-  
-  selectInput(
-    "tab2_scatterplot_citation_selectize",
-    label = "Studies to show",
-    choices = sort(available_citations),
-    selected = NULL,
-    multiple = TRUE,
-    width = "100%"
-  )
-})
-
-data_tab2_scatterplot_hc <-
-  eventReactive(
-    c(
-      input$tab2_scatterplot_population_options,
-      input$tab2_scatterplot_citation_selectize,
-      input$tab2_scatterplot_repeated_or_oneshot,
-      input$tab2_scatterplot_location,
-      input$tab2_scatterplot_controls_suggested,
-      input$tab2_scatterplot_draw_or_mind
-    ),
-    {
-      data_tab2_scatterplot <- data_tab2_scatterplot
-      
-      switch(
-        input$tab2_scatterplot_population_options,
-        "0" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(student == 0)
-        },
-        "1" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(student == 1)
-        },
-        "both" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot
-        }
-      )
-      
-      switch(
-        input$tab2_scatterplot_repeated_or_oneshot,
-        "0" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(repeated == 0)
-        },
-        "1" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(repeated == 1)
-        },
-        "both" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot
-        }
-      )
-      
-      switch(
-        input$tab2_scatterplot_location,
-        "0" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(remote == 0)
-        },
-        "1" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(remote == 1)
-        },
-        "both" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot
-        }
-      )
-      
-      switch(
-        input$tab2_scatterplot_controls_suggested,
-        "0" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(control_rolls == 0)
-        },
-        "1" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(control_rolls == 1)
-        },
-        "both" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot
-        }
-      )
-      
-      switch(
-        input$tab2_scatterplot_draw_or_mind,
-        "0" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(internal_lying == 0)
-        },
-        "1" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(internal_lying == 1)
-        },
-        "both" = {
-          data_tab2_scatterplot <- data_tab2_scatterplot
-        }
-      )
-      
-      if (nrow(data_tab2_scatterplot) == 0) {
-        # no data
-        return(data_frame())
-      } else {
-        if (!is.null(input$tab2_scatterplot_citation_selectize)) {
-          data_tab2_scatterplot <- data_tab2_scatterplot %>%
-            filter(citation %in% input$tab2_scatterplot_citation_selectize)
-        }
-      }
-      
-      data_tab2_scatterplot
-      
-      
-    },
-    ignoreNULL = TRUE
-  )
-
 
 output$tab2_scatterplot_hc_UI <- renderUI({
   show("loading-tab2_scatterplot_hc")
@@ -135,7 +10,9 @@ output$tab2_scatterplot_hc_UI <- renderUI({
 })
 
 output$tab2_scatterplot_hc <- renderHighchart({
-  data_tab2_scatterplot_hc <- data_tab2_scatterplot_hc()
+  # data_tab2_scatterplot_hc <- data_tab2_scatterplot_hc()
+  
+  data_tab2_scatterplot_hc <- data_tab2_scatterplot
   
   if (nrow(data_tab2_scatterplot_hc) == 0) {
     highchart()
@@ -221,8 +98,9 @@ output$tab2_scatterplot_hc <- renderHighchart({
         )) %>%
       hc_chart(zoomType = "xy") %>%
       hc_xAxis(title = list(text = "Country"),
-               labels = list(rotation = 90),
-               lineColor = "black") %>%
+               labels = list(rotation = 90, step = 1),
+               lineColor = "black"
+      ) %>%
       hc_yAxis(
         gridLines = FALSE,
         gridLineWidth = 0,
@@ -259,7 +137,10 @@ observeEvent(input$tab2_scatterplot_hc_click,
              })
 
 output$tab2_scatterplot_bubble_model_UI <- renderUI({
-  data_tab2_scatterplot_hc <- data_tab2_scatterplot_hc()
+  # data_tab2_scatterplot_hc <- data_tab2_scatterplot_hc()
+  
+  data_tab2_scatterplot_hc <- data_tab2_scatterplot
+  
   y_coord <- input$tab2_scatterplot_hc_click$y
   point_treatment <- input$tab2_scatterplot_hc_click$series
   point_country <- input$tab2_scatterplot_hc_click$name

@@ -2,23 +2,6 @@ observeEvent(input$tab1_scatter_reset, {
   shinyjs::reset("tab1_scatter_controls")
 })
 
-output$tab1_scatter_total_reports_UI <- renderUI({
-  
-  the_total_reports <- data_tab1_scatter %>%
-    select(total_reports) %>%
-    unique() %>%
-    .[[1]] %>%
-    sort()
-  
-  selectInput(
-    "tab1_scatter_total_reports",
-    label = "Total reports",
-    choices = the_total_reports,
-    multiple = TRUE
-  )
-  
-})
-
 output$tab1_scatter_number_of_rounds_UI <- renderUI({
   
   no_rounds <- sort(unique(data_tab1_scatter$total_reports))
@@ -86,7 +69,6 @@ data_tab1_scatter_hc <-
       input$tab1_scatter_controls_suggested,
       input$tab1_scatter_draw_or_mind,
       input$tab1_scatter_selected_countries,
-      input$tab1_scatter_total_reports,
       input$tab1_scatter_number_of_rounds
     ),
     {
@@ -108,15 +90,6 @@ data_tab1_scatter_hc <-
       filtered_data_tab1_scatter <- filtered_data_tab1_scatter %>%
         filter(total_reports %in% input$tab1_scatter_number_of_rounds)
     }
-    
-    
-    if(is.null(input$tab1_scatter_total_reports)){
-      filtered_data_tab1_scatter <- filtered_data_tab1_scatter
-    } else {
-      filtered_data_tab1_scatter <- filtered_data_tab1_scatter %>%
-        filter(total_reports %in% input$tab1_scatter_total_reports)
-    }
-    
     
     switch(
       input$tab1_scatter_population_options,

@@ -5,7 +5,7 @@ library(highcharter)
 
 shinyUI(
   navbarPage(
-    "Experimental Economics",
+    "",
     tabPanel(
       "Average Report over Repetitions",
       
@@ -70,7 +70,6 @@ shinyUI(
                   "bottom",
                   options = list(container = "body")
                 ),
-                uiOutput("tab1_scatter_total_reports_UI"),
                 uiOutput("tab1_scatter_citation_selectize_UI"),
                 bsTooltip(
                   "tab1_scatter_citation_selectize_UI",

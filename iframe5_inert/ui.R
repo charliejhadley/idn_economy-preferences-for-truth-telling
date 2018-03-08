@@ -5,7 +5,7 @@ library(highcharter)
 
 shinyUI(
   navbarPage(
-    "Experimental Economics",
+    "",
     tabPanel(
       "Average Report over Repetitions",
       

@@ -33,7 +33,8 @@ output$tab1_worldmap_leaflet <- renderLeaflet({
       fillColor = ~ world_map_palette(standardized_report_per_round),
       popup = ~ world_map_popup(country, standardized_report_per_round),
       label = ~ world_map_label(country, standardized_report_per_round),
-      weight = 1
+      weight = 1,
+      fillOpacity = 0.8
     ) %>%
     addLegend(
       pal = world_map_palette,
